@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smack Me</title>
+    <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <div class="container">
+    <div class="head">
+      
+      <h1>Smack Me! <span class="score">0</span></h1>      
+
+      <div class="animal-type">
+        <form>
+          <label>
+            <input type="radio" name="animal-face" value="lion" checked/>
+            <span>Lion</span>
+          </label>
+          <label>
+            <input type="radio" name="animal-face" value="snake"/>
+            <span>Snake</span>
+          </label>
+          <label>
+            <input type="radio" name="animal-face" value="fish"/>
+            <span>Fish</span>
+          </label>
+        </form>
+      </div>
+      <div class="difficulty">
+        <form class="difficulty-selector">
+          <label>
+            <input type="radio" name="difficulty" value="easy" checked/>
+            <span>Easy</span>
+          </label>
+          <label>
+            <input type="radio" name="difficulty" value="medium"/>
+            <span>Medium</span>
+          </label>
+          <label>
+            <input type="radio" name="difficulty" value="hard"/>
+            <span>Hard</span>
+          </label>
+        </form>
+      </div>
+      <button class="start-stop">Start!</button>
+
+    </div>
+  <div class="game">
+    <div class="hole hole1">
+      <div class="mole">
+        <!-- <img src="./lion_prev_ui.png" alt="fish" class="image"> -->
+      </div>
+    </div>
+    <div class="hole hole2">
+      <div class="mole"></div>
+    </div>
+    <div class="hole hole3">
+      <div class="mole"></div>
+    </div>
+    <div class="hole hole4">
+      <div class="mole"></div>
+    </div>
+    <div class="hole hole5">
+      <div class="mole"></div>
+    </div>
+    <div class="hole hole6">
+      <div class="mole"></div>
+    </div>
+    
+    
+  </div>
+</div>
+  
+<script>
+  const difficultyLevel = document.querySelectorAll("input[name=difficulty]")
+  const animalFace = document.querySelectorAll("input[name=animal-face]")
+
+
+  const holes = document.querySelectorAll('.hole');
+  const scoreBoard = document.querySelector('.score');
+  const startStop = document.querySelector('.start-stop');
+  const moles = document.querySelectorAll('.mole');
+  const gameTime = 10 //seconds
+  const difficultyValues={
+    easy:[300,1000],
+    medium:[200,600],
+    hard:[50,300]
+  }
+  const animalValues = {
+    lion:"./lion_prev_ui.png",
+    snake:"./snake.svg",
+    fish:"./fish_prev_ui.png"
+  }
+
+
+  let di = (function(){for (let i = 0; i < difficultyLevel.length; i++) {
+            if(difficultyLevel[i].checked){
+              return difficultyLevel[i].value
+            }      
+    }
+  })()
+  let animal = (function(){for (let i = 0; i < animalFace.length; i++) {
+            if(animalFace[i].checked){
+              return animalFace[i].value
+            }      
+    }
+  })()
+  let timeUp = false
+  let oldHole;
+  let countDown;
+  let score = 0;
+
+  function randomTime(min,max){
+    return Math.round(Math.random() * (max-min))+ min
+
+  }
+
+  function randomHoles(holes){
+    let totalHoles = holes.length;
+    let indx = Math.floor(Math.random() * totalHoles)
+    
+    // console.log(indx,oldHole);
+    if(indx === oldHole){
+      // console.log("Same as earlier")
+      return randomHoles(holes)
+    }
+    else{
+      const hole = holes[indx]
+      oldHole = indx;
+      return hole
+    }
+  }
+    
+    function popOut(){
+      const time = randomTime(difficultyValues[di][0], difficultyValues[di][1])
+      const hole = randomHoles(holes)
+      // console.log(time,hole);
+
+      hole.classList.add("up")
+      
+      setTimeout(() => {
+        hole.classList.remove("up")
+        if(!timeUp) popOut()  
+      }, time);
+    }
+
+
+    function startGame() {
+      for (let i = 0; i < moles.length; i++) {
+        moles[i].style.background =  `url(${animalValues[animal]}) bottom center no-repeat`
+        moles[i].style.backgroundSize = "100%"
+      }
+
+      scoreBoard.textContent = score = 0
+      // console.log(di);
+      this.style.visibility = "hidden"
+      timeUp = false
+      // console.log(!timeUp);
+      if(!timeUp){
+        clearTimeout(countDown)
+        popOut()
+      }
+      countDown = setTimeout(() => {
+        timeUp = true;
+        this.style.visibility = "visible"
+
+      },gameTime*1000)
+    }
+
+    startStop.addEventListener("click",startGame)
+  
+   
+
+    for (let i = 0; i < difficultyLevel.length; i++) {
+      difficultyLevel[i].addEventListener('click', function(){
+      // console.log(this.value);
+      di = this.value
+    });      
+    }
+
+    for (let i = 0; i < animalFace.length; i++) {
+      animalFace[i].addEventListener('click', function(){
+      console.log(this.value);
+      animal = this.value
+    });      
+    }
+
+
+    function Smack(e){
+      console.log(e);
+      if(e.isTrusted){
+        this.classList.remove("up")
+        ++score
+        scoreBoard.textContent=score
+      }
+    }
+
+    moles.forEach(element => {
+      element.addEventListener("click",Smack)
+      
+    });
+
+</script>
+</body>
+</html>

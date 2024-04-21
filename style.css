@@ -1,0 +1,153 @@
+:root {
+  --main-bg-color: #ede8f5;
+  --main-bg-dark: #e64833;
+}
+html {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    color: var(--main-bg-dark);
+
+    
+  }
+  
+  *, *:before, *:after {
+    box-sizing: inherit;
+  }
+  
+  body {
+    padding: 0;
+    margin: 0;
+    font-family: 'Amatic SC', cursive;
+  }
+  
+  .container{
+    padding: 20px;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 15% 75%;
+    gap: 30px;
+    height: 100vh;
+    width: 100vw;
+    max-height: auto;
+    max-width: auto;
+    align-items: center;
+    align-content: center;
+    background: linear-gradient(#212a31 10%, #d3d9d4 );
+
+  }
+@media (max-width:600px) {
+  .container{
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 15% 75%;
+    gap: 30px;
+    height: 200vh;
+    width: 200vw;
+    max-height: auto;
+    max-width: auto;
+    align-items: center;
+    align-content: center;
+    background: linear-gradient(#212a31 10%, #d3d9d4 );
+
+  }
+}
+
+  .head{
+    text-align: center;
+  }
+
+  form{
+    padding-top: 10px;
+  }
+
+  h1 {
+    text-align: center;
+    font-size: 5rem;
+    line-height: 1;
+    margin-bottom: 0;
+    text-shadow: 1px 1px 5px white;
+  }
+
+  .start-stop{
+    text-align: center;
+    margin: 10px 10px 0 10px;
+    width:100px;
+    height: 50px;
+    background-image: linear-gradient(to top, rgba(0, 0, 0, 0.234), #03264c80 );
+    padding: 10px 20px;
+    font-weight: 600;
+    font-family: monospace;
+    font-size: 1.3rem;
+    color: white;
+    cursor: pointer;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.234), #03264c5a);    ;
+    /* box-shadow:0 200px 100px -100px white inset, 0 0 5px black; */
+  
+    &:hover{
+      background: linear-gradient(to top, #03264c80, rgba(0, 0, 0, 0.234) );
+      /* box-shadow:0 200px 100px -100px deeppink inset, 0 0 5px black;   */
+    }
+}
+  
+
+  .score {
+    background: rgba(85, 188, 202, 0.352);
+    padding: 0 3rem;
+    line-height: 1;
+    border-radius: 1rem;
+  }
+  
+  .game {
+    width: 600px;
+    height: 400px;
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 auto;
+  }
+  
+  .hole {
+    flex: 1 0 33.33%;
+    overflow: hidden;
+    position: relative;
+    /* border: 1px solid #03264c; */
+  }
+  
+  .hole:after {
+    display: block;
+    background: url(dirt.svg) bottom center no-repeat;
+    background-size: contain;
+    content: '';
+    width: 100%;
+    height:70px;
+    position: absolute;
+    z-index: 2;
+    bottom: -30px;
+  }
+  
+  .mole {
+    background: url('./lion_prev_ui.png') bottom center no-repeat;
+    background-size: 100%;
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60%;
+    height: 100%;
+    transition:all 0.08s;
+    /* border: 1px solid red; */
+  }
+
+  /* .image{
+    position: absolute;
+    top:  0%;
+    width: 100%;
+    height: 100%;
+    transition:all 0.1s;
+    object-fit: contain;
+    cursor: pointer;
+  } */
+  
+  .hole.up .mole {
+    top: 0;
+  }
