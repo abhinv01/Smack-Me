@@ -50,6 +50,7 @@
   <div class="game">
     <div class="hole hole1">
       <div class="mole">
+        <audio class="audio-file" src="./kick.wav"></audio>
         <!-- <img src="./lion_prev_ui.png" alt="fish" class="image"> -->
       </div>
     </div>
@@ -74,6 +75,7 @@
 </div>
   
 <script>
+  const audio = document.querySelector(`.audio-file`);
   const difficultyLevel = document.querySelectorAll("input[name=difficulty]")
   const animalFace = document.querySelectorAll("input[name=animal-face]")
 
@@ -192,6 +194,10 @@
       console.log(e);
       if(e.isTrusted){
         this.classList.remove("up")
+        if (audio){
+          audio.currentTime = 0;
+          audio.play();
+        }
         ++score
         scoreBoard.textContent=score
       }
